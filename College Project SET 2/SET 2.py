@@ -1,10 +1,41 @@
 from tkinter import *
+import sqlite3 as db
+
 
 root = Tk()
 root.geometry("800x700")
 # root.maxsize(412, 717)
 # root.minsize(412, 717)
 root.title("Job Application")
+
+# Create a database or connect to one
+connect1 = db.connect('Database.db')
+
+# Create a cursor
+cur = connect1.cursor()
+
+# Creat table
+cur.execute('''CREATE TABLE IF NOT EXISTS DATA
+(
+    Name TEXT,
+    Email TEXT,
+    Education TEXT,
+    Resume TEXT,
+    Address1 TEXT,
+    Address2 TEXT,
+    Country TEXT,
+    City TEXT,
+    Zip TEXT,
+    Phone Number TEXT,
+    Hobbies TEXT,
+    Company TEXT,
+    JobTitle TEXT
+)''')
+cur.close()
+connect1.commit()
+connect1.close()
+
+
 
 def getvalue():
     print("\n")
@@ -36,6 +67,16 @@ def getvalue():
     print("Reference Name2:", r_name2_entry.get())
     print("Reference Phone2:", r_phone2_entry.get())
 
+    connect1 = db.connect('Database.db')
+    cur = connect1.cursor()
+    cur.execute("Insert into DATA values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"
+                % (name1_entry.get(),email_entry.get(), education_entry.get(),
+                resume_entry.get(),Add1_entry.get(),Add2_entry.get(),country_entry.get(),
+                city_entry.get(),zipcode_entry.get(),number_entry.get(),HLWYH_entry.get(),
+                company_entry.get(),Job_entry.get()))
+    cur.close()
+    connect1.commit()
+    cur.close()
 
     # Taking Job Application input from user in txt file
 
